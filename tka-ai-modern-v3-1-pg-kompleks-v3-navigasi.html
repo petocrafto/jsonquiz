@@ -1,0 +1,1133 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TKA AI Generator — Modern Study Workspace</title>
+    <!-- Google Fonts: Plus Jakarta Sans -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+:root{
+  --bg:#070812;
+  --bg-2:#0b0e1a;
+  --surface:rgba(17,20,35,.78);
+  --surface-2:rgba(22,26,45,.72);
+  --line:rgba(255,255,255,.09);
+  --line-strong:rgba(132,103,255,.42);
+  --text:#f7f7fb;
+  --muted:#969bb1;
+  --primary:#7c5cff;
+  --primary-2:#a78bfa;
+  --cyan:#4fd1ff;
+  --danger:#ff647c;
+  --success:#48d597;
+  --radius:22px;
+  --radius-sm:14px;
+  --shadow:0 24px 80px rgba(0,0,0,.38);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  min-height:100vh;
+  font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(900px 500px at 10% -10%,rgba(124,92,255,.20),transparent 60%),
+    radial-gradient(800px 500px at 100% 15%,rgba(79,209,255,.11),transparent 58%),
+    linear-gradient(145deg,var(--bg),var(--bg-2) 55%,#090b15);
+  padding:28px 18px 70px;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+body:before{
+  content:"";
+  position:fixed;inset:0;pointer-events:none;opacity:.35;
+  background-image:linear-gradient(rgba(255,255,255,.018) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.018) 1px,transparent 1px);
+  background-size:42px 42px;
+  mask-image:linear-gradient(to bottom,black,transparent 80%);
+}
+.container{width:min(940px,100%);margin:0 auto;position:relative;z-index:1}
+.header-title{text-align:center;margin:10px auto 32px}
+.header-title h1{
+  font-size:clamp(28px,5vw,44px);
+  line-height:1.05;
+  font-weight:800;
+  letter-spacing:-1.8px;
+  color:#fff;
+}
+.header-title h1 span{
+  color:transparent;
+  background:linear-gradient(135deg,#fff 0%,var(--primary-2) 45%,var(--cyan) 100%);
+  -webkit-background-clip:text;background-clip:text;
+}
+.header-title p{margin-top:10px;color:var(--muted);font-size:14px}
+.card,.soal-card,.exam-header{
+  background:linear-gradient(145deg,rgba(24,27,46,.84),rgba(12,15,27,.78));
+  border:1px solid var(--line);
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+.card{
+  padding:30px;
+  border-radius:var(--radius);
+  margin-bottom:20px;
+  position:relative;
+  overflow:hidden;
+}
+.card:before{
+  content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,var(--primary),var(--cyan),transparent);
+  opacity:.65;
+}
+.card:hover{border-color:rgba(167,139,250,.22)}
+.card-title{
+  display:flex;align-items:center;gap:10px;
+  font-size:17px;font-weight:750;color:#fff;margin-bottom:20px;
+  letter-spacing:-.2px;
+}
+.card-title:first-letter{color:var(--primary-2)}
+.form-group{margin-bottom:18px}
+label{display:block;margin-bottom:8px;font-size:12px;font-weight:700;color:#b4b8ca;letter-spacing:.15px}
+input[type="text"],input[type="password"],input[type="number"],select,textarea{
+  width:100%;padding:13px 15px;
+  border:1px solid var(--line);
+  border-radius:var(--radius-sm);
+  color:#fff;background:rgba(5,7,14,.62);
+  font:inherit;font-size:13px;
+  outline:none;transition:.22s ease;
+}
+textarea{resize:vertical;min-height:96px}
+input::placeholder,textarea::placeholder{color:#666c80}
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(124,92,255,.75);
+  background:rgba(9,11,20,.82);
+  box-shadow:0 0 0 4px rgba(124,92,255,.11),0 10px 30px rgba(124,92,255,.08);
+}
+select option{background:#111425;color:#fff}
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.divider{
+  height:1px;margin:26px 0;
+  background:linear-gradient(90deg,transparent,var(--line),transparent);
+}
+button{
+  width:100%;min-height:48px;padding:13px 20px;
+  border:1px solid transparent;border-radius:var(--radius-sm);
+  color:#fff;font:inherit;font-size:13px;font-weight:800;
+  cursor:pointer;
+  background:linear-gradient(135deg,#6d4cff,#8d6dff 55%,#5fcfff);
+  box-shadow:0 12px 28px rgba(124,92,255,.22);
+  transition:transform .2s ease,box-shadow .2s ease,filter .2s ease;
+  letter-spacing:.1px;
+}
+button:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 16px 38px rgba(124,92,255,.3)}
+button:active{transform:translateY(0)}
+.btn-secondary{
+  background:rgba(255,255,255,.035);
+  border-color:rgba(167,139,250,.34);
+  color:#dcd7ff;box-shadow:none;
+}
+.btn-secondary:hover{background:rgba(124,92,255,.10);box-shadow:0 12px 30px rgba(124,92,255,.12)}
+.btn-danger{
+  background:rgba(255,100,124,.055);
+  border-color:rgba(255,100,124,.4);
+  color:#ff9aac;box-shadow:none;
+}
+.btn-danger:hover{background:rgba(255,100,124,.11);box-shadow:0 12px 30px rgba(255,100,124,.12)}
+#loading{
+  display:none;text-align:center;padding:42px 20px;color:#c8c2ff;font-size:13px;font-weight:700
+}
+.spinner{
+  width:42px;height:42px;margin:0 auto 14px;border-radius:50%;
+  border:3px solid rgba(255,255,255,.08);
+  border-top-color:var(--primary-2);
+  border-right-color:var(--cyan);
+  animation:spin .75s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Exam */
+#examCard{animation:fadeUp .35s ease}
+.exam-header{
+  position:sticky;top:14px;z-index:20;
+  padding:15px 18px;border-radius:18px;margin-bottom:18px;
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+}
+.exam-header span{font-size:12px;font-weight:800;letter-spacing:.7px;color:#dfe2ef!important}
+.timer-badge{
+  font-size:12px;font-weight:800;color:#fff;
+  padding:8px 12px;border-radius:999px;
+  background:rgba(255,100,124,.09);
+  border:1px solid rgba(255,100,124,.38);
+  box-shadow:0 0 22px rgba(255,100,124,.10);
+  white-space:nowrap;
+}
+.soal-card{
+  padding:24px;border-radius:18px;margin-bottom:14px;
+  box-shadow:0 14px 44px rgba(0,0,0,.2);
+  animation:fadeUp .35s ease both;
+}
+.soal-text{
+  font-size:15px;font-weight:700;line-height:1.7;
+  margin-bottom:17px;color:#f7f7fb;
+}
+.opsi-container{display:flex;flex-direction:column;gap:9px}
+.opsi-label{
+  display:flex;align-items:flex-start;gap:11px;
+  padding:13px 14px;border:1px solid var(--line);
+  border-radius:13px;background:rgba(5,7,14,.42);
+  color:#aeb3c5;font-size:13px;cursor:pointer;
+  transition:.18s ease;
+}
+.opsi-label:hover{border-color:rgba(124,92,255,.45);background:rgba(124,92,255,.055);color:#fff;transform:translateX(2px)}
+.opsi-label input[type="radio"]{
+  margin:2px 0 0;accent-color:var(--primary);
+  width:16px;height:16px;flex:0 0 auto;
+}
+.opsi-label input[type="checkbox"]{
+  margin:2px 0 0;accent-color:var(--primary);
+  width:16px;height:16px;flex:0 0 auto;
+}
+.jenis-soal{
+  display:inline-block;margin-bottom:10px;padding:5px 9px;border-radius:999px;
+  font-size:10px;font-weight:800;letter-spacing:.4px;color:#cfc7ff;
+  background:rgba(124,92,255,.10);border:1px solid rgba(124,92,255,.22);
+}
+.exam-navigation{
+  display:flex;gap:10px;justify-content:space-between;align-items:center;
+  margin-top:18px;flex-wrap:wrap;
+}
+.exam-navigation .btn-primary,.exam-navigation .btn-ghost{min-width:110px;}
+
+.opsi-label strong{color:#c7bbff!important;min-width:17px}
+.opsi-label.selected{
+  border-color:rgba(124,92,255,.78);
+  background:linear-gradient(90deg,rgba(124,92,255,.16),rgba(79,209,255,.055));
+  color:#fff;
+  box-shadow:0 8px 26px rgba(124,92,255,.10);
+}
+#resultCard{animation:fadeUp .35s ease}
+#outputTeks{
+  background:rgba(5,7,14,.7);
+  border-color:var(--line);
+  color:#d8d9e5;
+}
+.ai-response{
+  margin-top:16px;padding:18px;
+  border:1px solid rgba(79,209,255,.22);
+  border-radius:15px;
+  background:linear-gradient(145deg,rgba(79,209,255,.045),rgba(124,92,255,.055));
+  color:#d8ddf4;font-size:13px;line-height:1.75;
+  white-space:pre-wrap;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+@media(max-width:640px){
+  body{padding:18px 12px 50px}
+  .card{padding:21px;border-radius:18px}
+  .grid-2{grid-template-columns:1fr}
+  .header-title{margin-bottom:24px}
+  .header-title h1{letter-spacing:-1.2px}
+  .exam-header{top:8px;padding:12px 14px}
+  .soal-card{padding:18px}
+  .soal-text{font-size:14px}
+  .opsi-label{font-size:12.5px;padding:12px}
+}
+
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  margin:-28px -18px 28px;
+  border-bottom:1px solid rgba(255,255,255,.07);
+  background:rgba(7,8,18,.78);
+  backdrop-filter:blur(22px);
+  -webkit-backdrop-filter:blur(22px);
+}
+.nav-inner{
+  width:min(940px,100%);min-height:64px;margin:auto;padding:0 18px;
+  display:flex;align-items:center;justify-content:space-between;gap:18px;
+}
+.brand-btn,.nav-links button,.nav-back{
+  width:auto;min-height:auto;padding:8px 10px;
+  background:transparent;border:0;box-shadow:none;
+  font-size:12px;font-weight:750;color:#aeb3c5;
+}
+.brand-btn:hover,.nav-links button:hover,.nav-back:hover{
+  transform:none;box-shadow:none;filter:none;color:#fff;background:rgba(255,255,255,.045)
+}
+.brand-btn{display:flex;align-items:center;gap:9px;color:#fff;font-size:14px}
+.brand-btn b{color:#9f8cff}
+.brand-mark{
+  width:28px;height:28px;display:grid;place-items:center;border-radius:9px;
+  background:linear-gradient(135deg,#6d4cff,#62d5ff);color:#fff;
+  box-shadow:0 7px 20px rgba(124,92,255,.25)
+}
+.nav-links{display:flex;align-items:center;gap:2px}
+.nav-back{color:#c9c2ff}
+.import-actions,.result-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:-5px 0 12px}
+.result-actions{grid-template-columns:1fr 1fr 1fr;margin:0 0 12px}
+.btn-ghost{
+  background:rgba(255,255,255,.035);
+  border:1px solid rgba(255,255,255,.10);
+  color:#c3c7d8;box-shadow:none;
+}
+.btn-ghost:hover{background:rgba(255,255,255,.07);box-shadow:0 10px 25px rgba(0,0,0,.18)}
+.toast{
+  position:fixed;right:18px;bottom:18px;z-index:200;
+  padding:12px 15px;border:1px solid rgba(255,255,255,.1);
+  border-radius:12px;background:rgba(18,21,36,.92);color:#fff;
+  box-shadow:0 16px 50px rgba(0,0,0,.35);font-size:12px;font-weight:700;
+  animation:fadeUp .2s ease
+}
+@media(max-width:640px){
+  .top-nav{margin:-18px -12px 20px}
+  .nav-inner{min-height:58px;padding:0 12px}
+  .nav-links{display:none}
+  .nav-back{display:block!important}
+  .import-actions,.result-actions{grid-template-columns:1fr}
+}
+
+
+/* Professional app navbar */
+.top-nav{
+  position:sticky;top:0;z-index:100;
+  margin:-28px -18px 28px;
+  border-bottom:1px solid rgba(255,255,255,.075);
+  background:rgba(7,8,18,.82);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+}
+.nav-inner{
+  width:min(1080px,100%);min-height:68px;margin:auto;padding:0 18px;
+  display:flex;align-items:center;gap:24px;
+}
+.brand-btn{flex:0 0 auto;display:flex!important;align-items:center;gap:10px}
+.brand-copy{display:flex;flex-direction:column;text-align:left;line-height:1.05;font-size:14px}
+.brand-copy small{font-size:8px;color:#777d91;font-weight:700;letter-spacing:.7px;margin-top:4px}
+.brand-mark{width:30px!important;height:30px!important}
+.nav-links{display:flex;align-items:center;gap:3px;flex:1}
+.nav-item{position:relative!important}
+.nav-item.active{color:#fff!important}
+.nav-item.active:after{
+  content:"";position:absolute;left:10px;right:10px;bottom:1px;height:2px;
+  border-radius:2px;background:linear-gradient(90deg,var(--primary),var(--cyan))
+}
+.nav-tools{display:flex;align-items:center;gap:7px}
+.api-status{
+  width:auto!important;min-height:42px!important;padding:6px 10px!important;
+  display:flex!important;align-items:center;gap:9px;
+  background:rgba(255,255,255,.035)!important;
+  border:1px solid rgba(255,255,255,.09)!important;
+  border-radius:13px!important;box-shadow:none!important;
+}
+.api-status:hover{transform:none!important;box-shadow:0 8px 25px rgba(0,0,0,.18)!important}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#777d91;box-shadow:0 0 0 4px rgba(119,125,145,.08)}
+.status-dot.connected{background:var(--success);box-shadow:0 0 0 4px rgba(72,213,151,.10),0 0 12px rgba(72,213,151,.5)}
+.api-status-text{display:flex;flex-direction:column;text-align:left;line-height:1.15}
+.api-status-text small{font-size:8px;color:#777d91;font-weight:700;text-transform:uppercase;letter-spacing:.6px}
+.api-status-text strong{font-size:10px;color:#dfe2ef;margin-top:3px}
+.chevron{color:#777d91;font-size:15px;margin-left:2px}
+.settings-btn{
+  width:40px!important;min-height:42px!important;padding:0!important;
+  background:rgba(255,255,255,.035)!important;border:1px solid rgba(255,255,255,.09)!important;
+  box-shadow:none!important;font-size:16px!important;color:#b7bbca!important;
+}
+.settings-btn:hover{transform:none!important;background:rgba(255,255,255,.08)!important;box-shadow:none!important}
+.nav-back{width:auto!important;min-height:42px!important;padding:8px 12px!important}
+
+/* Settings drawer/modal */
+.settings-panel{display:none;position:fixed;inset:0;z-index:300}
+.settings-panel.open{display:block}
+.settings-backdrop{position:absolute;inset:0;background:rgba(0,0,0,.58);backdrop-filter:blur(5px)}
+.settings-modal{
+  position:absolute;right:18px;top:78px;width:min(430px,calc(100% - 24px));
+  padding:24px;border-radius:22px;
+  background:linear-gradient(145deg,#171a2b,#0d101c);
+  border:1px solid rgba(255,255,255,.11);
+  box-shadow:0 30px 100px rgba(0,0,0,.55);
+  animation:settingsIn .2s ease;
+}
+@keyframes settingsIn{from{opacity:0;transform:translateY(-8px) scale(.98)}to{opacity:1;transform:none}}
+.settings-head{display:flex;justify-content:space-between;gap:15px;margin-bottom:22px}
+.eyebrow{font-size:8px;letter-spacing:1.2px;color:#8175d9;font-weight:800}
+.settings-head h2{font-size:21px;letter-spacing:-.5px;margin-top:5px}
+.settings-head p{font-size:11px;color:var(--muted);margin-top:4px}
+.close-settings{width:34px!important;height:34px!important;min-height:34px!important;padding:0!important;background:rgba(255,255,255,.05)!important;border:1px solid var(--line)!important;box-shadow:none!important;font-size:21px!important;color:#aeb3c5!important}
+.settings-section{margin-bottom:18px}
+.settings-section.compact{padding-top:3px}
+.api-input-wrap{display:flex;gap:8px}
+.api-input-wrap input{flex:1}
+.mini-btn{width:auto!important;min-height:44px!important;padding:8px 12px!important;background:rgba(255,255,255,.045)!important;border:1px solid var(--line)!important;box-shadow:none!important;font-size:11px!important;color:#c8cbe0!important}
+.api-help{display:flex;align-items:center;gap:6px;color:#73798d;font-size:9px;margin-top:8px}
+.api-help span{color:var(--success)}
+.settings-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:18px}
+.setting-row{
+  display:flex;align-items:center;justify-content:space-between;gap:15px;
+  padding:13px;border:1px solid var(--line);border-radius:13px;background:rgba(255,255,255,.025)
+}
+.setting-row strong{display:block;font-size:11px}
+.setting-row small{display:block;color:#777d91;font-size:9px;margin-top:3px}
+.switch{margin:0!important}
+.switch input{display:none}
+.switch span{display:block;width:38px;height:22px;border-radius:99px;background:#292d3d;position:relative;cursor:pointer}
+.switch span:after{content:"";position:absolute;width:16px;height:16px;top:3px;left:3px;border-radius:50%;background:#777d91;transition:.2s}
+.switch input:checked+span{background:rgba(124,92,255,.5)}
+.switch input:checked+span:after{left:19px;background:#fff}
+.settings-footer{display:grid;grid-template-columns:1fr 1.4fr;gap:10px;margin-top:20px}
+.settings-footer button{width:100%}
+.api-connected-card{
+  display:flex;align-items:center;gap:12px;padding:13px 14px;margin-bottom:18px;
+  border:1px solid rgba(72,213,151,.18);border-radius:14px;
+  background:rgba(72,213,151,.045)
+}
+.connected-icon{width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgba(72,213,151,.13);color:var(--success);font-weight:900}
+.api-connected-card div:nth-child(2){flex:1}
+.api-connected-card strong{display:block;font-size:11px}
+.api-connected-card span{display:block;color:#777d91;font-size:9px;margin-top:3px}
+.small-action{width:auto!important;min-height:34px!important;padding:7px 10px!important;font-size:10px!important}
+
+@media(max-width:700px){
+  .top-nav{margin:-18px -12px 20px}
+  .nav-inner{min-height:62px;padding:0 12px;gap:10px}
+  .nav-links{display:none}
+  .api-status-text{display:none}
+  .api-status{padding:7px 10px!important}
+  .nav-back{display:block!important}
+  .settings-modal{right:10px;top:68px}
+  .settings-grid{grid-template-columns:1fr}
+}
+
+</style>
+</head>
+<body>
+<nav class="top-nav">
+  <div class="nav-inner">
+    <button class="brand-btn" type="button" onclick="goHome()">
+      <span class="brand-mark">✦</span>
+      <span class="brand-copy">TKA <b>AI</b><small>Study Workspace</small></span>
+    </button>
+
+    <div class="nav-links">
+      <button class="nav-item active" type="button" onclick="goHome()">Beranda</button>
+      <button class="nav-item" type="button" onclick="scrollToSection('setupCard')">Buat Soal</button>
+      <button class="nav-item" type="button" onclick="scrollToSection('resultCard')">Hasil</button>
+    </div>
+
+    <div class="nav-tools">
+      <button class="api-status" type="button" onclick="openSettings()">
+        <span class="status-dot" id="apiStatusDot"></span>
+        <span class="api-status-text"><small>Gemini API</small><strong id="apiStatusText">Belum terhubung</strong></span>
+        <span class="chevron">⌄</span>
+      </button>
+      <button class="settings-btn" type="button" onclick="openSettings()" aria-label="Pengaturan">⚙</button>
+      <button class="nav-back" id="navBackBtn" type="button" onclick="goBack()" style="display:none">← Kembali</button>
+    </div>
+  </div>
+</nav>
+
+<div class="settings-panel" id="settingsPanel" aria-hidden="true">
+  <div class="settings-backdrop" onclick="closeSettings()"></div>
+  <section class="settings-modal">
+    <div class="settings-head">
+      <div>
+        <span class="eyebrow">SYSTEM SETTINGS</span>
+        <h2>Pengaturan AI</h2>
+        <p>Atur koneksi Gemini dan preferensi generator.</p>
+      </div>
+      <button class="close-settings" type="button" onclick="closeSettings()">×</button>
+    </div>
+
+    <div class="settings-section">
+      <label for="navApiKey">Gemini API Key</label>
+      <div class="api-input-wrap">
+        <input type="password" id="navApiKey" placeholder="Masukkan Gemini API Key..." autocomplete="off">
+        <button type="button" class="mini-btn" onclick="toggleApiVisibility()">Tampilkan</button>
+      </div>
+      <div class="api-help">
+        <span>●</span> API key disimpan lokal di browser perangkat ini.
+      </div>
+    </div>
+
+    <div class="settings-grid">
+      <div>
+        <label for="navModel">Model Gemini</label>
+        <select id="navModel">
+          <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+          <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
+        </select>
+      </div>
+      <div>
+        <label for="navTheme">Tampilan</label>
+        <select id="navTheme">
+          <option value="dark">Dark Modern</option>
+          <option value="system">Ikuti Sistem</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="settings-section compact">
+      <div class="setting-row">
+        <div><strong>Simpan API Key</strong><small>Gunakan key tersimpan saat generate soal.</small></div>
+        <label class="switch"><input type="checkbox" id="saveApiToggle" checked><span></span></label>
+      </div>
+    </div>
+
+    <div class="settings-footer">
+      <button class="btn-ghost" type="button" onclick="closeSettings()">Batal</button>
+      <button type="button" onclick="saveNavSettings()">Simpan Pengaturan</button>
+    </div>
+  </section>
+</div>
+
+<div class="container">
+    <div class="header-title">
+        <h1><span>TKA</span> AI GENERATOR</h1>
+        <p>Ruang latihan TKA berbasis AI — simpel, cepat, dan fokus.</p>
+    </div>
+
+    <!-- Card Setup -->
+    <div class="card" id="setupCard">
+        <div class="card-title">⚡ Konfigurasi Sistem</div>
+        
+        <div class="api-connected-card" id="apiConnectedCard">
+            <div class="connected-icon">✓</div>
+            <div>
+                <strong>Gemini siap digunakan</strong>
+                <span>API Key diatur dari menu Gemini API di navbar.</span>
+            </div>
+            <button class="btn-ghost small-action" type="button" onclick="openSettings()">⚙ Atur</button>
+        </div>
+        <input type="hidden" id="apiKey">
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="useTimer">Pengaturan Timer</label>
+                <select id="useTimer" onchange="toggleTimerInput()">
+                    <option value="no">Tanpa Batas Waktu</option>
+                    <option value="yes">Gunakan Timer</option>
+                </select>
+            </div>
+
+            <div class="form-group" id="timerInputGroup" style="display: none;">
+                <label for="durasiMenit">Durasi (Menit)</label>
+                <input type="number" id="durasiMenit" value="10" min="1">
+            </div>
+        </div>
+
+        <div class="divider"></div>
+
+        <div class="card-title">🔮 Mode 1: AI Auto-Generate</div>
+        <div class="form-group">
+            <label for="topik">Materi / Subtopik TKA</label>
+            <input type="text" id="topik" placeholder="Contoh: Penalaran Logis, Aljabar, Bahasa Indonesia">
+        </div>
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="jumlah">Jumlah Soal</label>
+                <input type="number" id="jumlah" value="3" min="1" max="10">
+            </div>
+            <div class="form-group">
+                <label for="tingkat">Tingkat Kesulitan</label>
+                <select id="tingkat">
+                    <option value="Sedang">Sedang</option>
+                    <option value="Sangat Sulit (HOTS)">Sangat Sulit (HOTS)</option>
+                </select>
+            </div>
+        </div>
+        <button onclick="generateSoal()">Generate Soal & Mulai</button>
+
+        <div class="divider"></div>
+
+        <div class="card-title">📦 Mode 2: Import JSON Direct</div>
+        <div class="form-group">
+            <label for="jsonInput">Import Soal dari JSON</label>
+            <textarea id="jsonInput" rows="8" placeholder='Tempel JSON di sini, atau pilih file .json dari perangkat...'></textarea>
+        </div>
+        <div class="import-actions">
+            <button class="btn-ghost" type="button" onclick="isiContohJson()">🧩 Isi Contoh JSON</button>
+            <button class="btn-ghost" type="button" onclick="copyContohJson()">📋 Salin Contoh JSON</button>
+        </div>
+        <div class="import-actions">
+            <button class="btn-ghost" type="button" onclick="pasteJson()">📋 Paste JSON</button>
+            <button class="btn-ghost" type="button" onclick="document.getElementById('jsonFile').click()">📁 Pilih File JSON</button>
+            <input id="jsonFile" type="file" accept=".json,application/json" hidden onchange="importJsonFile(event)">
+        </div>
+        <button class="btn-secondary" onclick="loadFromTextarea()">Muat JSON & Mulai</button>
+    </div>
+
+    <!-- Loading -->
+    <div id="loading">
+        <div class="spinner"></div>
+        <span>Membuat Soal TKA dengan AI...</span>
+    </div>
+
+    <!-- Area Ujian -->
+    <div id="examCard" style="display: none;">
+        <div class="exam-header">
+            <span style="font-weight: 700; color: #fff; letter-spacing: 0.5px;">LEMBAR UJIAN DIGITAL</span>
+            <div id="timerBox" class="timer-badge">⏳ 00:00</div>
+        </div>
+
+        <div id="soalProgress" class="jenis-soal" style="margin-bottom:12px;">Soal 1 dari 20</div>
+        <div id="soalContainer"></div>
+        <div class="exam-navigation">
+            <button class="btn-ghost" id="btnKembali" type="button" onclick="soalSebelumnya()">← Kembali</button>
+            <button class="btn-ghost" id="btnRagu" type="button" onclick="toggleRagu()">⚑ Ragu-ragu</button>
+            <button class="btn-primary" id="btnLanjut" type="button" onclick="soalBerikutnya()">Lanjut →</button>
+            <button class="btn-primary" id="btnSelesai" type="button" onclick="submitUjian()" style="display:none;">Selesai & Nilai</button>
+        </div>
+
+        <div class="grid-2" style="margin-top: 24px;">
+            <button onclick="submitUjian()">Selesai & Evaluasi</button>
+            <button class="btn-danger" onclick="resetProgress()">Reset Progress</button>
+        </div>
+    </div>
+
+    <!-- Result & AI Analysis -->
+    <div class="card" id="resultCard" style="display: none;">
+        <div class="card-title">📊 Hasil & Ringkasan Evaluasi</div>
+        
+        <div class="form-group">
+            <label for="outputTeks">Ringkasan Hasil</label>
+            <textarea id="outputTeks" rows="8" readonly></textarea>
+        </div>
+
+        <div class="result-actions">
+            <button class="btn-secondary" onclick="copyOutput()">📋 Salin Hasil</button>
+            <button class="btn-ghost" type="button" onclick="downloadOutput()">⬇️ Download TXT</button>
+            <button class="btn-ghost" type="button" onclick="downloadResultJson()">🧾 Download JSON</button>
+        </div>
+        <button class="btn-secondary" onclick="analisisPakaiGemini()">🔍 Analisis Kelemahan via Gemini</button>
+        <div id="aiLanjutanBox" class="ai-response" style="display: none;"></div>
+    </div>
+</div>
+
+<script>
+    let currentSoalData = [];
+    let currentSoalIndex = 0;
+    window.soalRagu = window.soalRagu || [];
+    let userAnswers = {};
+    let timerInterval = null;
+    let sisaDetik = 0;
+
+    window.onload = function() {
+        syncApiFromStorage();
+        if (localStorage.getItem('gemini_api_key')) {
+            document.getElementById('apiKey').value = localStorage.getItem('gemini_api_key');
+        }
+        
+        if (localStorage.getItem('tka_progress_soal')) {
+            currentSoalData = JSON.parse(localStorage.getItem('tka_progress_soal'));
+            userAnswers = JSON.parse(localStorage.getItem('tka_progress_jawaban')) || {};
+            sisaDetik = parseInt(localStorage.getItem('tka_progress_timer')) || 0;
+            
+            if (currentSoalData.length > 0) {
+                document.getElementById('setupCard').style.display = 'none';
+                tampilkanAreaUjian();
+            }
+        }
+    };
+
+    function saveApiKey() {
+        localStorage.setItem('gemini_api_key', document.getElementById('apiKey').value.trim());
+    }
+
+    function toggleTimerInput() {
+        const useTimer = document.getElementById('useTimer').value;
+        document.getElementById('timerInputGroup').style.display = (useTimer === 'yes') ? 'block' : 'none';
+    }
+
+    function simpanStateKeLocal() {
+        localStorage.setItem('tka_progress_soal', JSON.stringify(currentSoalData));
+        localStorage.setItem('tka_progress_jawaban', JSON.stringify(userAnswers));
+        localStorage.setItem('tka_progress_timer', sisaDetik);
+    }
+
+    function resetProgress() {
+        localStorage.removeItem('tka_progress_soal');
+        localStorage.removeItem('tka_progress_jawaban');
+        localStorage.removeItem('tka_progress_timer');
+        clearInterval(timerInterval);
+        location.reload();
+    }
+
+    async function generateSoal() {
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const topik = document.getElementById('topik').value.trim();
+        const jumlah = document.getElementById('jumlah').value;
+        const tingkat = document.getElementById('tingkat').value;
+
+        if (!apiKey) return alert("API Key belum diisi!");
+        if (!topik) return alert("Topik belum diisi!");
+
+        document.getElementById('loading').style.display = 'block';
+
+        const prompt = `Buatkan ${jumlah} soal TKA tentang "${topik}" tingkat "${tingkat}".
+        Kembalikan HANYA JSON array valid tanpa markdown formatting. Format wajib:
+        [{"no":1, "soal":"...", "opsi":{"A":"..","B":"..","C":"..","D":"..","E":".."}, "kunci":"A", "pembahasan":"..."}]`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await res.json();
+            let rawText = data.candidates[0].content.parts[0].text;
+            rawText = rawText.replace(/```json/g, '').replace(/```/g, '').trim();
+
+            currentSoalData = JSON.parse(rawText);
+            userAnswers = {};
+            inialisasiTimer();
+            simpanStateKeLocal();
+            document.getElementById('setupCard').style.display = 'none';
+            tampilkanAreaUjian();
+        } catch (err) {
+            alert("Gagal ambil soal dari Gemini: " + err.message);
+        } finally {
+            document.getElementById('loading').style.display = 'none';
+        }
+    }
+
+    function loadFromTextarea() {
+        const text = document.getElementById('jsonInput').value.trim();
+        if (!text) return alert("Paste teks JSON dulu!");
+        try {
+            currentSoalData = JSON.parse(text);
+            userAnswers = {};
+            inialisasiTimer();
+            simpanStateKeLocal();
+            document.getElementById('setupCard').style.display = 'none';
+            tampilkanAreaUjian();
+        } catch (err) {
+            alert("Format JSON salah!");
+        }
+    }
+
+    function inialisasiTimer() {
+        const useTimer = document.getElementById('useTimer').value;
+        if (useTimer === 'yes') {
+            const menit = parseInt(document.getElementById('durasiMenit').value) || 10;
+            sisaDetik = menit * 60;
+            mulaiTimer();
+        } else {
+            sisaDetik = 0;
+            document.getElementById('timerBox').style.display = 'none';
+        }
+    }
+
+    function mulaiTimer() {
+        clearInterval(timerInterval);
+        if (sisaDetik <= 0) return;
+
+        timerInterval = setInterval(() => {
+            sisaDetik--;
+            simpanStateKeLocal();
+
+            let m = Math.floor(sisaDetik / 60);
+            let s = sisaDetik % 60;
+            document.getElementById('timerBox').innerText = `⏳ ${m}:${s < 10 ? '0' : ''}${s}`;
+
+            if (sisaDetik <= 0) {
+                clearInterval(timerInterval);
+                alert("Waktu habis! Jawaban kamu otomatis dikirim.");
+                submitUjian();
+            }
+        }, 1000);
+    }
+
+    function tampilkanAreaUjian() {
+        document.getElementById('examCard').style.display = 'block';
+        showBackNav();
+
+        if (sisaDetik > 0 && !timerInterval) {
+            mulaiTimer();
+        }
+
+        tampilkanSoalKe(currentSoalIndex || 0);
+    }
+
+    function tampilkanSoalKe(index) {
+        if (!currentSoalData.length) return;
+
+        currentSoalIndex = Math.max(0, Math.min(index, currentSoalData.length - 1));
+        const item = currentSoalData[currentSoalIndex];
+        const isComplex = item.tipe === 'kompleks' || Array.isArray(item.kunci);
+        const answers = Array.isArray(userAnswers[currentSoalIndex])
+            ? userAnswers[currentSoalIndex]
+            : (userAnswers[currentSoalIndex] ? [userAnswers[currentSoalIndex]] : []);
+
+        let opsiHtml = '';
+        for (let key in item.opsi) {
+            const checked = answers.includes(key) ? 'checked' : '';
+            const selectedClass = answers.includes(key) ? 'selected' : '';
+            const inputType = isComplex ? 'checkbox' : 'radio';
+
+            opsiHtml += `
+                <label class="opsi-label ${selectedClass}" id="label_${currentSoalIndex}_${key}">
+                    <input type="${inputType}" name="soal_${currentSoalIndex}" value="${key}" ${checked}
+                           onchange="pilihJawaban(${currentSoalIndex}, '${key}', ${isComplex})">
+                    <strong style="color: var(--purple-light);">${key}.</strong>&nbsp;${item.opsi[key]}
+                </label>
+            `;
+        }
+
+        const badge = isComplex
+            ? '<div class="jenis-soal">PILIHAN GANDA KOMPLEKS • LEBIH DARI 1 JAWABAN BENAR</div>'
+            : '<div class="jenis-soal">PILIHAN GANDA • 1 JAWABAN BENAR</div>';
+
+        const ragu = Array.isArray(window.soalRagu) && window.soalRagu.includes(currentSoalIndex);
+
+        document.getElementById('soalProgress').textContent =
+            `Soal ${currentSoalIndex + 1} dari ${currentSoalData.length}${ragu ? ' • ⚑ Ragu-ragu' : ''}`;
+
+        document.getElementById('soalContainer').innerHTML = `
+            <div class="soal-card">
+                ${badge}
+                <div class="soal-text">${currentSoalIndex + 1}. ${item.soal}</div>
+                <div class="opsi-container">${opsiHtml}</div>
+            </div>
+        `;
+
+        document.getElementById('btnKembali').disabled = currentSoalIndex === 0;
+        document.getElementById('btnLanjut').style.display =
+            currentSoalIndex === currentSoalData.length - 1 ? 'none' : 'inline-block';
+        document.getElementById('btnSelesai').style.display =
+            currentSoalIndex === currentSoalData.length - 1 ? 'inline-block' : 'none';
+        document.getElementById('btnRagu').textContent = ragu ? '⚑ Batal Ragu' : '⚑ Ragu-ragu';
+    }
+
+    function soalBerikutnya() {
+        simpanStateKeLocal();
+        if (currentSoalIndex < currentSoalData.length - 1) {
+            tampilkanSoalKe(currentSoalIndex + 1);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    }
+
+    function soalSebelumnya() {
+        simpanStateKeLocal();
+        if (currentSoalIndex > 0) {
+            tampilkanSoalKe(currentSoalIndex - 1);
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    }
+
+    function toggleRagu() {
+        if (!Array.isArray(window.soalRagu)) window.soalRagu = [];
+        const pos = window.soalRagu.indexOf(currentSoalIndex);
+        if (pos >= 0) window.soalRagu.splice(pos, 1);
+        else window.soalRagu.push(currentSoalIndex);
+        simpanStateKeLocal();
+        tampilkanSoalKe(currentSoalIndex);
+    }
+
+    function pilihJawaban(soalIndex, kunci, isComplex) {
+        if (isComplex) {
+            let answers = Array.isArray(userAnswers[soalIndex]) ? [...userAnswers[soalIndex]] : [];
+            if (answers.includes(kunci)) {
+                answers = answers.filter(x => x !== kunci);
+            } else {
+                answers.push(kunci);
+            }
+            answers.sort();
+            userAnswers[soalIndex] = answers;
+        } else {
+            userAnswers[soalIndex] = kunci;
+        }
+
+        simpanStateKeLocal();
+
+        const selected = Array.isArray(userAnswers[soalIndex])
+            ? userAnswers[soalIndex]
+            : [userAnswers[soalIndex]];
+
+        const labels = document.querySelectorAll(`[id^="label_${soalIndex}_"]`);
+        labels.forEach(lbl => {
+            const key = lbl.id.split('_').pop();
+            lbl.classList.toggle('selected', selected.includes(key));
+        });
+    }
+
+    function submitUjian() {
+        clearInterval(timerInterval);
+        document.getElementById('examCard').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'block';
+        showBackNav();
+        
+        let benar = 0;
+        let rincianTeks = "=== EVALUASI HASIL UJIAN TKA ===\n\n";
+
+        currentSoalData.forEach((item, i) => {
+            const isComplex = item.tipe === 'kompleks' || Array.isArray(item.kunci);
+            const jawabArr = Array.isArray(userAnswers[i])
+                ? [...userAnswers[i]].sort()
+                : (userAnswers[i] ? [userAnswers[i]] : []);
+            const kunciArr = Array.isArray(item.kunci)
+                ? [...item.kunci].sort()
+                : [item.kunci];
+
+            const status = JSON.stringify(jawabArr) === JSON.stringify(kunciArr) ? "BENAR" : "SALAH";
+            if (status === "BENAR") benar++;
+
+            const jawab = jawabArr.length ? jawabArr.join(", ") : "Tidak Dijawab";
+            const kunci = kunciArr.join(", ");
+
+            rincianTeks += `Soal No ${i+1}: ${item.soal}\n`;
+            rincianTeks += `Tipe: ${isComplex ? "Pilihan Ganda Kompleks" : "Pilihan Ganda"}\n`;
+            rincianTeks += `Jawaban Kamu: ${jawab}\n`;
+            rincianTeks += `Kunci Jawaban: ${kunci}\n`;
+            rincianTeks += `Status: ${status}\n`;
+            if (status === "SALAH") {
+                rincianTeks += `Pembahasan: ${item.pembahasan}\n`;
+            }
+            rincianTeks += "-----------------------------------\n";
+        });
+
+        rincianTeks = `Skor Akhir: ${benar} dari ${currentSoalData.length} Soal Benar.\n\n` + rincianTeks;
+        document.getElementById('outputTeks').value = rincianTeks;
+    }
+
+    async function analisisPakaiGemini() {
+        const apiKey = document.getElementById('apiKey').value.trim();
+        const teks = document.getElementById('outputTeks').value;
+
+        if (!apiKey) return alert("API Key Gemini belum diisi!");
+
+        const box = document.getElementById('aiLanjutanBox');
+        box.style.display = 'block';
+        box.innerText = "Gemini sedang menganalisis kelemahan kamu...";
+
+        const prompt = `Berikut adalah hasil ujian TKA saya:\n\n${teks}\n\nBerikan analisis mendalam berbasis teks mengenai kesalahan saya. Jelaskan materi apa yang perlu saya pelajari lagi dan berikan tips sederhana agar tidak salah lagi di tipe soal serupa.`;
+
+        try {
+            const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${apiKey}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents: [{ parts: [{ text: prompt }] }] })
+            });
+            const data = await res.json();
+            box.innerText = data.candidates[0].content.parts[0].text;
+        } catch (err) {
+            box.innerText = "Gagal meminta analisis lanjutan: " + err.message;
+        }
+    }
+
+    function scrollToSection(id) {
+        const el = document.getElementById(id);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    function goHome() {
+        clearInterval(timerInterval);
+        document.getElementById('setupCard').style.display = 'block';
+        document.getElementById('examCard').style.display = 'none';
+        document.getElementById('resultCard').style.display = 'none';
+        document.getElementById('loading').style.display = 'none';
+        document.getElementById('navBackBtn').style.display = 'none';
+        window.scrollTo({top: 0, behavior: 'smooth'});
+    }
+
+    function goBack() {
+        if (document.getElementById('resultCard').style.display !== 'none') {
+            document.getElementById('resultCard').style.display = 'none';
+            document.getElementById('examCard').style.display = 'block';
+        showBackNav();
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        } else {
+            goHome();
+        }
+    }
+
+    function showBackNav() {
+        document.getElementById('navBackBtn').style.display = 'block';
+    }
+
+    function toast(message) {
+        const old = document.querySelector('.toast');
+        if (old) old.remove();
+        const t = document.createElement('div');
+        t.className = 'toast';
+        t.textContent = message;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2200);
+    }
+
+    function contohJsonData() {
+        return [
+            {
+                "no": 1,
+                "soal": "Manakah pernyataan yang benar tentang penalaran logis? Pilih lebih dari satu jawaban yang benar.",
+                "tipe": "kompleks",
+                "opsi": {
+                    "A": "Kesimpulan harus didukung oleh premis.",
+                    "B": "Semua argumen yang panjang pasti benar.",
+                    "C": "Validitas berkaitan dengan hubungan logis antara premis dan kesimpulan.",
+                    "D": "Pendapat pribadi selalu menjadi bukti.",
+                    "E": "Premis yang benar dapat membantu menghasilkan kesimpulan yang kuat."
+                },
+                "kunci": ["A", "C", "E"],
+                "pembahasan": "A, C, dan E benar karena berkaitan dengan struktur argumen dan dukungan premis. B dan D tidak tepat."
+            },
+            {
+                "no": 2,
+                "soal": "Jika 2x + 6 = 14, nilai x adalah ...",
+                "tipe": "biasa",
+                "opsi": {
+                    "A": "2",
+                    "B": "3",
+                    "C": "4",
+                    "D": "5",
+                    "E": "6"
+                },
+                "kunci": "C",
+                "pembahasan": "2x + 6 = 14, sehingga 2x = 8 dan x = 4."
+            }
+        ];
+    }
+
+    function isiContohJson() {
+        document.getElementById('jsonInput').value =
+            JSON.stringify(contohJsonData(), null, 2);
+        toast('Contoh JSON berhasil dimasukkan.');
+    }
+
+    async function copyContohJson() {
+        const text = JSON.stringify(contohJsonData(), null, 2);
+        try {
+            await navigator.clipboard.writeText(text);
+            toast('Contoh JSON berhasil disalin.');
+        } catch (e) {
+            const area = document.getElementById('jsonInput');
+            area.value = text;
+            area.focus();
+            area.select();
+            document.execCommand('copy');
+            toast('Contoh JSON berhasil disalin.');
+        }
+    }
+
+    async function pasteJson() {
+        try {
+            const text = await navigator.clipboard.readText();
+            if (!text.trim()) return toast('Clipboard kosong.');
+            document.getElementById('jsonInput').value = text;
+            toast('JSON berhasil ditempel.');
+        } catch (e) {
+            document.getElementById('jsonInput').focus();
+            toast('Izin clipboard ditolak. Tempel manual dengan Ctrl+V.');
+        }
+    }
+
+    function importJsonFile(event) {
+        const file = event.target.files && event.target.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = () => {
+            document.getElementById('jsonInput').value = reader.result;
+            toast('File JSON berhasil dimuat.');
+        };
+        reader.onerror = () => toast('Gagal membaca file JSON.');
+        reader.readAsText(file);
+        event.target.value = '';
+    }
+
+    async function copyOutput() {
+        const text = document.getElementById('outputTeks').value;
+        if (!text) return toast('Belum ada hasil untuk disalin.');
+        try {
+            await navigator.clipboard.writeText(text);
+            toast('Hasil berhasil disalin.');
+        } catch (e) {
+            const area = document.getElementById('outputTeks');
+            area.focus(); area.select();
+            document.execCommand('copy');
+            toast('Hasil berhasil disalin.');
+        }
+    }
+
+    function downloadBlob(content, filename, type) {
+        const blob = new Blob([content], {type});
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url; a.download = filename;
+        document.body.appendChild(a); a.click(); a.remove();
+        URL.revokeObjectURL(url);
+    }
+
+    function downloadOutput() {
+        const text = document.getElementById('outputTeks').value;
+        if (!text) return toast('Belum ada hasil untuk di-download.');
+        downloadBlob(text, 'hasil-tka.txt', 'text/plain;charset=utf-8');
+        toast('Hasil TXT sedang diunduh.');
+    }
+
+    function downloadResultJson() {
+        if (!currentSoalData.length) return toast('Belum ada data soal.');
+        const payload = {
+            generatedAt: new Date().toISOString(),
+            soal: currentSoalData,
+            jawaban: userAnswers
+        };
+        downloadBlob(JSON.stringify(payload, null, 2), 'hasil-tka.json', 'application/json;charset=utf-8');
+        toast('File JSON sedang diunduh.');
+    }
+
+
+    function openSettings() {
+        const panel = document.getElementById('settingsPanel');
+        const saved = localStorage.getItem('gemini_api_key') || '';
+        document.getElementById('navApiKey').value = saved;
+        document.getElementById('apiStatusText').textContent = saved ? 'Terhubung' : 'Belum terhubung';
+        document.getElementById('apiStatusDot').classList.toggle('connected', !!saved);
+        panel.classList.add('open');
+        panel.setAttribute('aria-hidden','false');
+    }
+
+    function closeSettings() {
+        const panel = document.getElementById('settingsPanel');
+        panel.classList.remove('open');
+        panel.setAttribute('aria-hidden','true');
+    }
+
+    function toggleApiVisibility() {
+        const input = document.getElementById('navApiKey');
+        const btn = document.querySelector('.mini-btn');
+        input.type = input.type === 'password' ? 'text' : 'password';
+        btn.textContent = input.type === 'password' ? 'Tampilkan' : 'Sembunyikan';
+    }
+
+    function saveNavSettings() {
+        const key = document.getElementById('navApiKey').value.trim();
+        const save = document.getElementById('saveApiToggle').checked;
+        document.getElementById('apiKey').value = key;
+
+        if (save && key) {
+            localStorage.setItem('gemini_api_key', key);
+        } else if (!save) {
+            localStorage.removeItem('gemini_api_key');
+        }
+
+        document.getElementById('apiStatusText').textContent = key ? 'Terhubung' : 'Belum terhubung';
+        document.getElementById('apiStatusDot').classList.toggle('connected', !!key);
+        closeSettings();
+        toast(key ? 'Pengaturan Gemini tersimpan.' : 'API Key belum diisi.');
+    }
+
+    // Keep the original API-key functions compatible with the new navbar settings.
+    function syncApiFromStorage() {
+        const key = localStorage.getItem('gemini_api_key') || '';
+        const hidden = document.getElementById('apiKey');
+        if (hidden) hidden.value = key;
+        const nav = document.getElementById('navApiKey');
+        if (nav) nav.value = key;
+        const text = document.getElementById('apiStatusText');
+        const dot = document.getElementById('apiStatusDot');
+        if (text) text.textContent = key ? 'Terhubung' : 'Belum terhubung';
+        if (dot) dot.classList.toggle('connected', !!key);
+    }
+
+</script>
+
+</body>
+</html>
